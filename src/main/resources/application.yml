@@ -1,0 +1,21 @@
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: API_Gateway
+  cloud:
+      gateway:
+        routes:
+          - id: posts
+            uri: https://jsonplaceholder.typicode.com
+            predicates:
+              - Path=/posts/**
+          - id: auth
+            #uri:
+            predicates:
+              - Path=/login
+server:
+  port: 8765
