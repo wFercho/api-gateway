@@ -10,13 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @EnableDiscoveryClient
 public class GatewayApplication {
 
-	@Value("${server.port}")
-	int serverPort;
-
-	@RequestMapping("/")
-	public String home() {
-		return String.format("server-%s",serverPort);
-	}
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayApplication.class, args);
 	}

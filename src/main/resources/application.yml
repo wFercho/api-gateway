@@ -13,5 +13,17 @@ spring:
             uri: https://jsonplaceholder.typicode.com
             predicates:
               - Path=/posts/**
+
+  data:
+    redis:
+      host: viaduct.proxy.rlwy.net
+      port: 29501
+      username: default
+      password: VKBrSpbcHuohzuYioCrcieEOaVBiUJSO
 server:
   port: 8765
+jwt:
+  secret: 57443a4c052350a44638835d64fd66822f813319123132123123sfsafdfsdf57443a4c052350a44638835d64fd66822f813319123132123123sfsafdfsdf
+  expiration: 86400
+
+
