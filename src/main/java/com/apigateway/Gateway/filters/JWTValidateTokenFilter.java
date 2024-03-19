@@ -44,6 +44,7 @@ public class JWTValidateTokenFilter extends AbstractGatewayFilterFactory<JWTVali
                     System.out.println("REFRESCA EL TOKEN");
                     exchange.getResponse().getHeaders().set("Authorization", tokenRefresh);
                     exchange.getResponse().setStatusCode(HttpStatus.ACCEPTED);
+                    System.out.println("CONTENT TYPE MICROSERVICE RESPONSE: "+exchange.getResponse().getHeaders().getContentType());
                 }
             } catch (Exception e) {
                 System.out.println("ESTÁ FALLANDO"+e.getMessage());
