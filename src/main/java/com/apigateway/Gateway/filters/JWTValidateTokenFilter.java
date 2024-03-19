@@ -27,25 +27,26 @@ public class JWTValidateTokenFilter extends AbstractGatewayFilterFactory<JWTVali
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
             String authorizationHeader = exchange.getRequest().getHeaders().getFirst("Authorization");
-            if (authorizationHeader != null) {
-                //if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-                String jwtToken = authorizationHeader;
-                try {
-                    ResponseEntity<String> validationResponse = postDataToRemoteService("https://token-generator-ten.vercel.app/validateToken", jwtToken);
-                    int status = validationResponse.getStatusCode().value();
-                    System.out.println("STATUS CODE: "+status);
-                    if( status >= 200 && status < 300 ){
-                        exchange.getResponse().setStatusCode(HttpStatus.ACCEPTED);
-                        String tokenRefresh = postDataToRemote("https://token-generator-ten.vercel.app/refreshToken", "{}");
-                        exchange.getResponse().getHeaders().set("Authorization", tokenRefresh);
-                    }
-                }catch (Exception e){
-                    System.out.println("ESTÁ FALLANDO"+e.getMessage());
-                    exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-
-                }
-            } else {
+            if (authorizationHeader == null) {
+                System.out.println("NO ESTÁ DEFINIDA LA CABECERA DE AUTH");
                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                return exchange.getResponse().setComplete();
+            }
+
+            String jwtToken = authorizationHeader;
+            try {
+                ResponseEntity<String> validationResponse = postDataToRemoteService("https://token-generator-ten.vercel.app/validateToken", jwtToken);
+                int status = validationResponse.getStatusCode().value();
+                System.out.println("STATUS CODE: "+status);
+                if (status >= 200 && status < 300) {
+                    exchange.getResponse().setStatusCode(HttpStatus.ACCEPTED);
+                    String tokenRefresh = postDataToRemote("https://token-generator-ten.vercel.app/refreshToken", "{}");
+                    exchange.getResponse().getHeaders().set("Authorization", tokenRefresh);
+                }
+            } catch (Exception e) {
+                System.out.println("ESTÁ FALLANDO"+e.getMessage());
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                return exchange.getResponse().setComplete();
             }
             return chain.filter(exchange);
         };
