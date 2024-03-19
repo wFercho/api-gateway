@@ -45,8 +45,8 @@ public class GatewayConfig {
                                 .filter(
                                         jwtValidateTokenFilter.apply(config -> config.setLogHeaders(false))
                                 )
-                                .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
                                 .stripPrefix(1)
+                                .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
                         )
                         .uri("lb://APIEVENTOS")
 
