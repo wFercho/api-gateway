@@ -81,6 +81,14 @@ public class GatewayConfig {
                         .uri("https://inscripciones-cts9.onrender.com")
                 )
                 .route(r -> r
+                        .path("/inscription/getInscriptions")
+                        .filters(f -> f
+                                .filter(jwtValidateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
+                                .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
+                        )
+                        .uri("https://inscripciones-cts9.onrender.com")
+                )
+                .route(r -> r
                         .path("/**")
                         .filters(f -> f
                                 .filter(jwtValidateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
