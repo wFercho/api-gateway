@@ -45,10 +45,9 @@ public class GatewayConfig {
                                 .filter(
                                         jwtValidateTokenFilter.apply(config -> config.setLogHeaders(false))
                                 )
-                                .stripPrefix(1)
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
                         )
-                        .uri("lb://APIEVENTOS/")
+                        .uri("lb://apieventos")
 
                 )
                 .route(r -> r
@@ -57,7 +56,7 @@ public class GatewayConfig {
                                 .filter(jwtValidateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
                         )
-                        .uri("lb://APIEVENTOS/")
+                        .uri("lb://apieventos")
                 )
                 .route(r -> r
                         .path("/enviar-correo")
