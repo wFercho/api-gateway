@@ -37,7 +37,8 @@ public class JWTValidateTokenFilter extends AbstractGatewayFilterFactory<JWTVali
             try {
                 ResponseEntity<String> validationResponse = postDataToRemoteService("https://token-generator-ten.vercel.app/validateToken", jwtToken);
                 int status = validationResponse.getStatusCode().value();
-                System.out.println("STATUS CODE: "+status);
+                System.out.println("STATUS CODE TOKEN SERVICE: "+status);
+                System.out.println("STATUS CODE MICROSERVICE: "+exchange.getResponse().getStatusCode().value());
                 if (status >= 200 && status < 300) {
                     String tokenRefresh = postDataToRemote("https://token-generator-ten.vercel.app/refreshToken", "{}");
                     System.out.println("REFRESCA EL TOKEN");
