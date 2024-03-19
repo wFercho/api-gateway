@@ -42,8 +42,11 @@ public class GatewayConfig {
                 .route(r -> r
                         .path("/event/**")
                         .filters(f -> f
-                                .filter(jwtValidateTokenFilter.apply(config -> config.setLogHeaders(false)))
+                                .filter(
+                                        jwtValidateTokenFilter.apply(config -> config.setLogHeaders(false))
+                                )
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
+                                .stripPrefix(1)
                         )
                         .uri("lb://APIEVENTOS")
 
