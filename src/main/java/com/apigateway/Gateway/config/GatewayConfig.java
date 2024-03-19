@@ -80,6 +80,14 @@ public class GatewayConfig {
                         )
                         .uri("lb://MICROSERVICE_REPORTS")
                 )
+                .route(r -> r
+                        .path("/**")
+                        .filters(f -> f
+                                .filter(jwtValidateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
+                                .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
+                        )
+                        .uri("https://inscripciones-cts9.onrender.com")
+                )
                 .build();
     }
 
