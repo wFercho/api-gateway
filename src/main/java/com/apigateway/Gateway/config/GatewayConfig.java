@@ -78,7 +78,7 @@ public class GatewayConfig {
                                 .filter(jwtValidateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
                         )
-                        .uri("lb://MICROSERVICE_REPORTS")
+                        .uri("https://inscripciones-cts9.onrender.com")
                 )
                 .route(r -> r
                         .path("/**")
@@ -86,7 +86,7 @@ public class GatewayConfig {
                                 .filter(jwtValidateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
                         )
-                        .uri("https://inscripciones-cts9.onrender.com")
+                        .uri("lb://MICROSERVICE_REPORTS")
                 )
                 .build();
     }
