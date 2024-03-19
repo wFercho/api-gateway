@@ -29,7 +29,7 @@ public class GatewayConfig {
                         .path("/login/")
                         .filters(f -> f
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter())))
-                        .uri("lb://MICROSERVICE_LOGIN")
+                        .uri("https://microservice-production-b78e.up.railway.app")
                 )
                 .route(r -> r
                         .path("/login/access")
@@ -37,15 +37,15 @@ public class GatewayConfig {
                                 .filter(jwtCreateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
                         )
-                        .uri("lb://MICROSERVICE_LOGIN")
+                        .uri("https://microservice-production-b78e.up.railway.app")
                 )
                 .route(r -> r
                         .path("/event/**")
                         .filters(f -> f
-                                .filter(jwtValidateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
+                                .filter(jwtValidateTokenFilter.apply(config -> config.setLogHeaders(false)))
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
                         )
-                        .uri("lb://APIEVENTOS")
+                        .uri("https://apieventos-production-5514.up.railway.app")
 
                 )
                 .route(r -> r
@@ -54,7 +54,7 @@ public class GatewayConfig {
                                 .filter(jwtValidateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
                         )
-                        .uri("lb://APIEVENTOS")
+                        .uri("https://apieventos-production-5514.up.railway.app")
                 )
                 .route(r -> r
                         .path("/**")
