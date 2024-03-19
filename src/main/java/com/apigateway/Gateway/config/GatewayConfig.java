@@ -3,7 +3,6 @@ package com.apigateway.Gateway.config;
 import com.apigateway.Gateway.filters.JWTCreateTokenFilter;
 import com.apigateway.Gateway.filters.JWTValidateTokenFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -14,7 +13,6 @@ import reactor.core.publisher.Mono;
 
 
 @Configuration
-@EnableDiscoveryClient
 @RequiredArgsConstructor
 public class GatewayConfig {
 
@@ -47,6 +45,7 @@ public class GatewayConfig {
                                 .filter(
                                         jwtValidateTokenFilter.apply(config -> config.setLogHeaders(false))
                                 )
+                                
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
                         )
                         .uri("lb://apieventos")
