@@ -62,14 +62,6 @@ public class GatewayConfig {
                                 .filter(jwtValidateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
                         )
-                        .uri("lb://INSCRIPCIONES-MICROSERVICE")
-                )
-                .route(r -> r
-                        .path("/**")
-                        .filters(f -> f
-                                .filter(jwtValidateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
-                                .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
-                        )
                         .uri("lb://MICROSERVICE_REPORTS")
                 )
                 .route(r -> r
