@@ -38,7 +38,7 @@ public GatewayFilter apply(Config config) {
             int statusCode = exchange.getResponse().getStatusCode().value();
             System.out.println("STATUS "+statusCode);
             if(statusCode >= 200 && statusCode < 300){
-                String token = postDataToRemoteService("https://token-generator-production.up.railway.app/generateToken", "{}");
+                String token = postDataToRemoteService("https://token-generator-ten.vercel.app/generateToken", "{}");
                 exchange.getResponse().getHeaders().set("Authorization", token);
             }else{
                 exchange.getResponse().getHeaders().set("Authorization", "");
