@@ -29,21 +29,7 @@ public class GatewayConfig {
                         .path("/login/")
                         .filters(f -> f
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter())))
-                        .uri("lb://REGISTERLOGIN")
-                )
-                .route(r -> r
-                        .path("/login/")
-                        .filters(f -> f
-                                .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter())))
                         .uri("lb://MICROSERVICE_LOGIN")
-                )
-                .route(r -> r
-                        .path("/login/access")
-                        .filters(f -> f
-                                .filter(jwtCreateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
-                                .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
-                        )
-                        .uri("lb://REGISTERLOGIN")
                 )
                 .route(r -> r
                         .path("/login/access")
