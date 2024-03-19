@@ -3,6 +3,8 @@ eureka:
     serviceUrl:
       defaultZone: https://eurekaserver-production-5876.up.railway.app/eureka
       #defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: eurekaserver-production-5876.up.railway.app
 spring:
   application:
     name: Gateway
