@@ -45,10 +45,10 @@ public class GatewayConfig {
                                 .filter(
                                         jwtValidateTokenFilter.apply(config -> config.setLogHeaders(false))
                                 )
-                                
+
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
                         )
-                        .uri("lb://apieventos")
+                        .uri("https://apieventos-production-5514.up.railway.app")
 
                 )
                 .route(r -> r
@@ -57,7 +57,7 @@ public class GatewayConfig {
                                 .filter(jwtValidateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
                         )
-                        .uri("lb://apieventos")
+                        .uri("https://apieventos-production-5514.up.railway.app")
                 )
                 .route(r -> r
                         .path("/enviar-correo")
@@ -81,7 +81,15 @@ public class GatewayConfig {
                                 .filter(jwtValidateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
                         )
-                        .uri("lb://INSCRIPCIONES-MICROSERVICE")
+                        .uri("https://inscripciones-cts9.onrender.com")
+                )
+                .route(r -> r
+                        .path("/assistant/**")
+                        .filters(f -> f
+                                .filter(jwtValidateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
+                                .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
+                        )
+                        .uri("https://inscripciones-cts9.onrender.com")
                 )
                 .route(r -> r
                         .path("/**")
