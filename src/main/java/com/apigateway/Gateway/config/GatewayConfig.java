@@ -73,7 +73,7 @@ public class GatewayConfig {
                         .uri("https://microserviciomaven-production.up.railway.app")
                 )
                 .route(r -> r
-                        .path("/**")
+                        .path("/inscription/getInscriptions")
                         .filters(f -> f
                                 .filter(jwtValidateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
@@ -81,7 +81,7 @@ public class GatewayConfig {
                         .uri("https://inscripciones-cts9.onrender.com")
                 )
                 .route(r -> r
-                        .path("/inscription/getInscriptions")
+                        .path("/**")
                         .filters(f -> f
                                 .filter(jwtValidateTokenFilter.apply(config -> {config.setLogHeaders(false);}))
                                 .requestRateLimiter().configure(c -> c.setRateLimiter(redisRateLimiter()))
